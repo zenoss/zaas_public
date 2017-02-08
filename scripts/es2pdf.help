@@ -1,0 +1,61 @@
+es2pdf.py Help Doc
+
+TO RUN THE SCRIPT:
+	./es2pdf.py [OPTIONS]
+
+REQUIRED MODULES:
+	requests: 'pip install requests' OR 'easy_install requests' (Written by Kenneth Reitz)
+	fpdf: 'easy_install fpdf' (Written by Mariano Reingart) 
+	pyPdf: 'easy_install pypdf' (Written by Mathieu Fenniak)
+	encryptPDF.py: Included in git repository (Written by Taylor Glaeser using pyPdf module as base)
+	NOTE: encryptPDF IS OPTIONAL. IF NOT USED YOUR PDFS WILL NOT BE ENCRYPTED
+
+TO CONFIGURE THE SCRIPT:
+	OPEN es2pdf.cfg
+	SET THE 'elasticsearch_query' TO SOMETHING DEFAULT
+	SET THE 'pdf_filename_prefix' TO SOMETHING DEFAULT
+	SET THE 'elasticsearch_ip' TO YOUR elasticsearch IP AND PORT (IF NOT 9200)
+	
+	ENTER FIELDS TO PRINT, IF EXACT FIELDS ARE UNKNOWN USE THE -f FLAG TO GET A LIST OF FIELDS
+	(THIS MUST BE DONE AFTER THE OTHER DEFAULTS HAVE BEEN DEFINED)
+	USE THE CONVENTION '{field id in elasticsearch} = {Exact text to print to PDF}'
+	NOTE: PLEASE INCLUDE A COLON (':') IF YOU WANT ONE
+
+	IF USING encryptPDF.py CHANGE THE DEFAULT PASSWORD IN THE SCRIPT!!! (LINE 7)
+
+USING COMPLEX elasticsearch QUERIES:
+    CREATE 'es2pdfqueries.json' (IF YOU PREFER A DIFFERENT FILE NAME YOU MUST CHANGE 'DEFAULT_QUERIES' IN es2pdf.py)
+    
+    USE THE CONVENTION '$name_of_query == {json_text}'
+    
+    PLEASE NOTE THAT THE '$' IS REQUIRED
+    PLEASE READ THE elasticsearch DOCUMENTATION FOR QUERY STRUCTURE
+
+AVAILABLE CLI ARGUMENTS:
+	-h, --help            
+		Show the help screen
+    -o, --open
+        Open PDF after script finishes
+  	-c CONFIG, --config CONFIG
+		Change what config file to use
+  	-s SECTION, --section SECTION
+		Change what config section to use
+  	-ip IPADDR:PORT, --ipaddress IPADDR:PORT
+		Change what IP address and port is used to connect to elasticsearch
+  	-i INDEX, --index INDEX
+		Change what index to query (Default is 'logstash-')
+  	-d YYYY.MM.DD, --date YYYY.MM.DD
+		Change what index date to query (Default is yesterday)
+  	-q QUERY, --query QUERY
+		Change what query to execute
+  	-r RESULTS, --results RESULTS
+		Change the number of results requested
+  	-f, --fields
+		List all available fields to output from elasticsearch query
+  	-debug
+		Run es2pdf in debug mode (i.e. Using premade JSON strings) 
+		NOTE: DEBUG MODE IS CURRENTLY NON-FUNCTIONAL DUE TO PREMADE STRINGS BEING REMOVED FOR SECURITY
+  	-dr YYYY.MM.DD-YYYY.MM.DD, --daterange YYYY.MM.DD-YYYY.MM.DD
+		Choose a date range to run es2pdf through.
+    -j JSON_QUERY, --json JSON_QUERY
+        Choose what premade JSON query to use from queries file
